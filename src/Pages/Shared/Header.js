@@ -1,14 +1,11 @@
 import React from "react";
+import { Link } from "react-router-dom";
 
 const Header = () => {
   const navLink = (
     <>
       <li>
-        <a>Yo</a>
-      </li>
-
-      <li>
-        <a>Yo</a>
+        <Link to="/login">Login</Link>
       </li>
     </>
   );
