@@ -8,6 +8,9 @@ import Signup from "./Pages/Shared/Signup";
 import BlogDetails from "./Pages/BlogDetails/BlogDetails";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import Dashboard from "./Pages/Dashboard/Dashboard";
+import ManageMyPost from "./Pages/Dashboard/ManageMyPost";
+import RequireAuth from "./Pages/Shared/RequireAuth";
 
 function App() {
   return (
@@ -21,6 +24,17 @@ function App() {
           path="/details/:_id"
           element={<BlogDetails></BlogDetails>}
         ></Route>
+        <Route
+          path="/dashboard"
+          element={
+            <RequireAuth>
+              <Dashboard></Dashboard>
+            </RequireAuth>
+          }
+        >
+          <Route index element={<ManageMyPost></ManageMyPost>}></Route>
+          <Route path="mypost" element={<ManageMyPost></ManageMyPost>}></Route>
+        </Route>
       </Routes>
       <div className="container mx-auto">
         <ToastContainer position="top-center" autoClose={1000}></ToastContainer>

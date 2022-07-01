@@ -1,7 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 
-const SingleBlog = ({ blog }) => {
+const ManageSinglePost = ({ blog }) => {
   const { _id, title, image } = blog;
   return (
     <div
@@ -14,13 +14,18 @@ const SingleBlog = ({ blog }) => {
       <div class="hero-content text-center text-neutral-content">
         <div class="max-w-md py-10">
           <h1 class="mb-5 text-xl sm:text-3xl font-bold">{title}</h1>
-          <Link to={`details/${_id}`} class="btn btn-primary mt-3">
-            Read this blog
-          </Link>
+          <div>
+            <Link to={`/details/${_id}`} class="p-2 m-2 text-2xl text-warning">
+              <i class="fa-solid fa-eye"></i>{" "}
+            </Link>
+            <Link to={`/details/${_id}`} class="p-2 m-2 text-2xl text-warning">
+              <i class="fa-solid fa-trash"></i>
+            </Link>
+          </div>
         </div>
       </div>
     </div>
   );
 };
 
-export default SingleBlog;
+export default ManageSinglePost;

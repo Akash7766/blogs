@@ -1,12 +1,14 @@
 import { signOut } from "firebase/auth";
 import React from "react";
 import { useAuthState } from "react-firebase-hooks/auth";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import { toast } from "react-toastify";
 import auth from "../../firebase.init";
 
 const Header = () => {
   const [user, loading, error] = useAuthState(auth);
+  const location = useLocation();
+  console.log(location);
   const logout = () => {
     toast.success("Logout successful");
     signOut(auth);
@@ -16,7 +18,7 @@ const Header = () => {
       <li>
         {user ? (
           <>
-            <Link to="/">Dashboard</Link>
+            <Link to="/dashboard">Dashboard</Link>
             <button onClick={logout}>Logout</button>
           </>
         ) : (
@@ -63,6 +65,11 @@ const Header = () => {
             {navLink}
           </ul>
         </div>
+        {location.pathname === "/dashboard" && (
+          <label for="my-drawer-2" class="btn drawer-button lg:hidden">
+            Dashboard Menu
+          </label>
+        )}
       </div>
     </div>
   );
