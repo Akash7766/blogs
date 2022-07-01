@@ -22,9 +22,10 @@ function App() {
           element={<BlogDetails></BlogDetails>}
         ></Route>
       </Routes>
-      <ToastContainer position="top-center" autoClose={1000}></ToastContainer>
+      <div className="container mx-auto">
+        <ToastContainer position="top-center" autoClose={1000}></ToastContainer>
+      </div>
     </div>
   );
 }
-
 export default App;
