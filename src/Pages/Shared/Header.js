@@ -6,6 +6,7 @@ const Header = () => {
     <>
       <li>
         <Link to="/login">Login</Link>
+        <Link to="/signup">Signup</Link>
       </li>
     </>
   );
@@ -13,7 +14,9 @@ const Header = () => {
     <div className="container mx-auto">
       <div class="navbar bg-base-100">
         <div class="navbar-start">
-          <a class="btn btn-ghost normal-case text-xl">Tech Blogs</a>
+          <Link to="/" class="btn btn-ghost normal-case text-xl">
+            Tech Blogs
+          </Link>
         </div>
         <div class="hidden lg:flex navbar-end">
           <ul class="menu menu-horizontal p-0">{navLink}</ul>
