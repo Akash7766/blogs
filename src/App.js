@@ -6,6 +6,8 @@ import Home from "./Pages/Home/Home";
 import Login from "./Pages/Shared/Login";
 import Signup from "./Pages/Shared/Signup";
 import BlogDetails from "./Pages/BlogDetails/BlogDetails";
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 function App() {
   return (
@@ -20,6 +22,7 @@ function App() {
           element={<BlogDetails></BlogDetails>}
         ></Route>
       </Routes>
+      <ToastContainer position="top-center" autoClose={1000}></ToastContainer>
     </div>
   );
 }

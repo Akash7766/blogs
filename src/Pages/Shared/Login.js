@@ -1,9 +1,43 @@
-import React from "react";
-import { Link } from "react-router-dom";
+import React, { useEffect } from "react";
+import {
+  useAuthState,
+  useSignInWithEmailAndPassword,
+} from "react-firebase-hooks/auth";
+import { Link, useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
+import auth from "../../firebase.init";
 import GoogleLogin from "./GoogleLogin";
+import Loading from "./Loading";
 
 const Login = () => {
-  const handleLogin = () => {};
+  const [user, loading, error] = useAuthState(auth);
+  const [signInWithEmailAndPassword, EmailUser, emailLoading, emailError] =
+    useSignInWithEmailAndPassword(auth);
+  const navigate = useNavigate();
+  // if user exist then navigate to home
+  useEffect(() => {
+    if (user || EmailUser) {
+      toast.success("Login Successful");
+      navigate("/");
+    }
+  }, [user || EmailUser]);
+  // if any error then show it on UI
+  useEffect(() => {
+    if (error || emailError) {
+      toast.error(emailError?.code.split("/")[1]);
+    }
+  }, [error || emailError]);
+  // if loading then display loading components
+  if (loading || emailLoading) {
+    return <Loading></Loading>;
+  }
+  // handle login function
+  const handleLogin = (e) => {
+    e.preventDefault();
+    const email = e.target.email.value;
+    const password = e.target.password.value;
+    signInWithEmailAndPassword(email, password);
+  };
   return (
     <div className="bg-base-200">
       <div class=" items-center container mx-auto">

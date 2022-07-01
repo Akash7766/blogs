@@ -1,12 +1,30 @@
+import { signOut } from "firebase/auth";
 import React from "react";
+import { useAuthState } from "react-firebase-hooks/auth";
 import { Link } from "react-router-dom";
+import { toast } from "react-toastify";
+import auth from "../../firebase.init";
 
 const Header = () => {
+  const [user, loading, error] = useAuthState(auth);
+  const logout = () => {
+    toast.success("Logout successful");
+    signOut(auth);
+  };
   const navLink = (
     <>
       <li>
-        <Link to="/login">Login</Link>
-        <Link to="/signup">Signup</Link>
+        {user ? (
+          <>
+            <Link to="/">Dashboard</Link>
+            <button onClick={logout}>Logout</button>
+          </>
+        ) : (
+          <>
+            <Link to="/login">Login</Link>
+            <Link to="/signup">Signup</Link>
+          </>
+        )}
       </li>
     </>
   );

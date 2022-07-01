@@ -1,9 +1,48 @@
-import React from "react";
-import { Link } from "react-router-dom";
+import { async } from "@firebase/util";
+import React, { useEffect } from "react";
+import {
+  useAuthState,
+  useCreateUserWithEmailAndPassword,
+  useUpdateProfile,
+} from "react-firebase-hooks/auth";
+import { Link, useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
+import auth from "../../firebase.init";
 import GoogleLogin from "./GoogleLogin";
+import Loading from "./Loading";
 
 const Signup = () => {
-  const handleSignup = () => {};
+  const [user, loading, error] = useAuthState(auth);
+  const [createUserWithEmailAndPassword, emailUser, emailLoading, emailError] =
+    useCreateUserWithEmailAndPassword(auth);
+  const [updateProfile] = useUpdateProfile(auth);
+  const navigate = useNavigate();
+  // if user exist then navigate to home
+  useEffect(() => {
+    if (user || emailUser) {
+      toast.success("Accaount create successful");
+      navigate("/");
+    }
+  }, [user || emailUser]);
+  // if any error then show it on UI
+  useEffect(() => {
+    if (emailError) {
+      toast.error(emailError.code.split("/")[1]);
+    }
+  }, [emailError]);
+  // if loading then display loading components
+  if (loading || emailLoading) {
+    return <Loading></Loading>;
+  }
+  // handle singup function
+  const handleSignup = async (e) => {
+    e.preventDefault();
+    const displayName = e.target.name.value;
+    const email = e.target.email.value;
+    const password = e.target.password.value;
+    await createUserWithEmailAndPassword(email, password);
+    await updateProfile({ displayName });
+  };
   return (
     <div className="bg-base-200">
       <div class=" items-center container mx-auto">
@@ -51,7 +90,7 @@ const Signup = () => {
                 <input
                   type="submit"
                   class="btn btn-bordered btn-primary w-full"
-                  value="Login"
+                  value="Sign up"
                 />
               </form>
               <p>
